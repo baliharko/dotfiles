@@ -1,8 +1,8 @@
 # Dotfiles
 
-This directory is a collection of my personal configuration files that I manage with GNU Stow.
-Each subfolder (e.g. `zsh`, `nvim`, `tmux`) is a Stow package that I symlink into my home
-directory by running `stow <package>` from this folder.
+I keep my config files here and manage them with GNU Stow. Each subfolder (e.g. `zsh`, `nvim`,
+`tmux`) is a Stow package you can symlink into your home directory by running
+`stow <package>` from the repo root.
 
 ## Dependencies
 
@@ -13,7 +13,7 @@ Command-line tools used across these configs (install via Homebrew or your packa
 - `bat` (fzf previews)
 - `ripgrep` (Neovim search)
 
-using Homebrew:
+Using Homebrew:
 
 ```
 brew install git tmux fzf fd bat ripgrep
