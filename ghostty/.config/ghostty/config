@@ -1,0 +1,19 @@
+# ghostty +show-config --default --docs
+
+shell-integration-features = no-cursor
+cursor-style = block
+
+font-feature = -calt, -liga, -dlig, -hlig, -clig
+# font-family = "FiraCode Nerd Font"
+font-family = "Hack Nerd Font Mono"
+
+theme = kanagawabones
+
+background-opacity = 0.98
+background-blur = true
+
+macos-titlebar-style = hidden
+
+window-padding-balance = true
+window-padding-x = 10
+window-padding-y = 15

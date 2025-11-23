@@ -1,0 +1,29 @@
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+# Use custom format
+format = """
+$directory\
+$git_branch\
+$git_status\
+$character"""
+
+# Configure individual modules
+
+[directory]
+style = "blue"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = "[$branch]($style) "
+style = "bright-black"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "red"
+
+[character]
+success_symbol = "[>](green)"
+error_symbol = "[✗](red)"
+vimcmd_symbol = "[<](green)"
