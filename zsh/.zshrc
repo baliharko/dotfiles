@@ -14,15 +14,12 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(starship init zsh)"
 
-alias df-git='/usr/bin/git --git-dir=$HOME/.cache/df-git --work-tree=/Users/balazs.harko/'
 alias tmux='tmux -u'
-alias lg='sh $HOME/dev/scripts/live-glow.sh'
 alias sd="cd ~ && cd \$(fd -t d | fzf)"
 alias gtr="~/dev/go-to-repo/target/release/go-to-repo"
 alias pf="fzf --preview='bat --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias ta="tmux attach"
 alias colimatest="~/dev/scripts/colima_testcontainers.sh"
-alias l="ls -laGh"
 alias wd="sh $HOME/dev/scripts/work-diary.sh"
 alias k='kubectl'
 
