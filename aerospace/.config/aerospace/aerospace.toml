@@ -3,7 +3,7 @@
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = ['exec-and-forget $HOME/dev/aerospace-yoink/.build/release/yoink --daemon']
+after-startup-command = ['exec-and-forget /usr/local/bin/yoink --daemon']
 
 # Start AeroSpace at login
 start-at-login = true
