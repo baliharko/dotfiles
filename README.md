@@ -19,6 +19,21 @@ Using Homebrew:
 brew install git tmux fzf fd bat ripgrep
 ```
 
+## aerospace-yoink
+
+The AeroSpace config uses [aerospace-yoink](https://github.com/balazs-harko/aerospace-yoink) to pull windows from other workspaces. It runs as a daemon on startup and is bound to `hyper+y`.
+
+Clone and build it:
+
+```
+cd ~/dev
+git clone https://github.com/balazs-harko/aerospace-yoink.git
+cd aerospace-yoink
+swift build -c release
+```
+
+The AeroSpace config expects the binary at `$HOME/dev/aerospace-yoink/.build/release/yoink`.
+
 ## tmux plugins
 
 Run `./scripts/install_tmux_plugins.sh` to clone `tpm` and install the plugins declared in `tmux/.config/tmux/.tmux.conf`.

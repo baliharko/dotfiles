@@ -17,3 +17,11 @@ macos-titlebar-style = hidden
 window-padding-balance = true
 window-padding-x = 10
 window-padding-y = 15
+
+# Quick terminal (quake-style overlay)
+keybind = global:super+alt+shift+ctrl+n=toggle_quick_terminal
+quick-terminal-position = center
+quick-terminal-size = 80%,80%
+quick-terminal-animation-duration = 0
+quick-terminal-autohide = false
+quick-terminal-screen = mouse

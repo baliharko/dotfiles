@@ -3,7 +3,7 @@
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = ['exec-and-forget $HOME/dev/aerospace-yoink/.build/release/yoink --daemon']
 
 # Start AeroSpace at login
 start-at-login = true
@@ -161,6 +161,10 @@ automatically-unhide-macos-hidden-apps = false
     alt-ctrl-enter = "fullscreen"
 
     alt-ctrl-cmd-shift-t = "layout floating tiling"
+
+    # Yoink - pull a window from another workspace into the current one
+    alt-shift-ctrl-cmd-y = 'exec-and-forget $HOME/dev/aerospace-yoink/.build/release/yoink'
+
 
 
 # 'service' binding mode declaration.

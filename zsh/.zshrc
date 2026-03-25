@@ -13,6 +13,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
 alias tmux='tmux -u'
 alias sd="cd ~ && cd \$(fd -t d | fzf)"
@@ -58,8 +59,13 @@ done
 # create symlink for docker to $HOME in order for testcontainers find the docker environment
 # ln -s $HOME/.docker/run/docker.sock /var/run/docker.sock &> /dev/null
 
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+export TESTCONTAINERS_HOST_OVERRIDE=$(colima ls -j | jq -r '.address')
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+
 # opencode
-export PATH=/Users/balazs.harko/.opencode/bin:$PATH
+export PATH=$HOME/.opencode/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
