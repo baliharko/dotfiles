@@ -21,7 +21,7 @@ brew install git tmux fzf fd bat ripgrep
 
 ## aerospace-yoink
 
-The AeroSpace config uses [aerospace-yoink](https://github.com/balazs-harko/aerospace-yoink) to pull windows from other workspaces. It runs as a daemon on startup and is bound to `hyper+y`.
+The AeroSpace config uses [aerospace-yoink](https://github.com/baliharko/aerospace-yoink) to pull windows from other workspaces. It runs as a daemon on startup and is bound to `hyper+y`.
 
 Clone and build it:
 
