@@ -1,7 +1,6 @@
 export LESSCHARSET=utf-8
 export NVM_DIR="$HOME/.nvm"
-export SDKMAN_DIR="$HOME/.sdkman"
-export FZF_COMPLETION_TRIGGER=**
+export FZF_COMPLETION_TRIGGER='**'
 
 export ZSH="$HOME/.oh-my-zsh"
 plugins=(
@@ -10,12 +9,11 @@ plugins=(
     zsh-autosuggestions
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
-alias tmux='tmux -u'
 alias sd="cd ~ && cd \$(fd -t d | fzf)"
 alias gtr="~/dev/go-to-repo/target/release/go-to-repo"
 alias pf="fzf --preview='bat --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
@@ -23,7 +21,6 @@ alias ta="tmux attach"
 alias colimatest="~/dev/scripts/colima_testcontainers.sh"
 alias wd="sh $HOME/dev/scripts/work-diary.sh"
 alias k='kubectl'
-
 
 bindkey -v
 bindkey "^r^r" history-incremental-search-backward
@@ -56,18 +53,49 @@ for cmd in nvm node npm npx; do
   lazyload $cmd load_nvm
 done
 
-# create symlink for docker to $HOME in order for testcontainers find the docker environment
-# ln -s $HOME/.docker/run/docker.sock /var/run/docker.sock &> /dev/null
-
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
-export TESTCONTAINERS_HOST_OVERRIDE=$(colima ls -j | jq -r '.address')
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
+# TESTCONTAINERS_HOST_OVERRIDE is colima's VM address. Computing it
+# (`colima ls -j | jq`) costs ~480ms, so cache it and only recompute when
+# colima's state actually changes.
+_colima_addr_cache="${XDG_CACHE_HOME:-$HOME/.cache}/colima-address"
+_refresh_colima_addr() {
+  mkdir -p "${_colima_addr_cache:h}"
+  colima ls -j 2>/dev/null | jq -r '.address' > "$_colima_addr_cache"
+  export TESTCONTAINERS_HOST_OVERRIDE="$(<"$_colima_addr_cache")"
+}
+alias tcrefresh=_refresh_colima_addr
+
+if [[ -r "$_colima_addr_cache" ]]; then
+  export TESTCONTAINERS_HOST_OVERRIDE="$(<"$_colima_addr_cache")"
+else
+  # First run after adopting this: populate in the background so startup
+  # never blocks on colima. The var becomes available from the next shell.
+  _refresh_colima_addr &>/dev/null &!
+fi
+
+# Keep the cache correct: refresh whenever colima's state changes.
+colima() {
+  command colima "$@"
+  local rc=$?
+  case "$1" in
+    start|stop|restart|delete) _refresh_colima_addr ;;
+  esac
+  return $rc
+}
+
 # opencode
-export PATH=$HOME/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# Lazy-load SDKMAN — its init script costs ~300-500ms. Same pattern as nvm above.
 export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+load_sdkman() {
+  unset -f sdk java javac jar mvn gradle kotlin kotlinc scala springboot 2>/dev/null
+  [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+}
+for cmd in sdk java javac jar mvn gradle kotlin kotlinc scala springboot; do
+  lazyload $cmd load_sdkman
+done
 

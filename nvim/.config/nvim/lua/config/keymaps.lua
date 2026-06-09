@@ -113,11 +113,11 @@ for _, mapping in ipairs(telescope_mappings) do
 end
 
 map("n", "<leader>n", with_neo_tree(function(command)
-  command.execute({ toggle = true, dir = vim.loop.cwd() })
+  command.execute({ toggle = true, dir = vim.uv.cwd() })
 end), { desc = "Toggle Neo-tree" })
 
 map("n", "<leader>pv", with_neo_tree(function(command)
-  command.execute({ toggle = true, dir = vim.loop.cwd(), position = "float" })
+  command.execute({ toggle = true, dir = vim.uv.cwd(), position = "float" })
 end), { desc = "Project view (Neo-tree)" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -133,12 +133,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, "Hover info")
     buf_map("n", "<leader>vws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
     buf_map("n", "<leader>vd", vim.diagnostic.open_float, "Diagnostics float")
-    buf_map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
-    buf_map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+    buf_map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next diagnostic")
+    buf_map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Prev diagnostic")
     buf_map("n", "<leader>vca", vim.lsp.buf.code_action, "Code action")
     buf_map("n", "<leader>vrr", vim.lsp.buf.references, "References")
     buf_map("n", "<leader>vrn", vim.lsp.buf.rename, "Rename symbol")
-    buf_map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
+    buf_map("i", "<C-h>", function()
+      vim.lsp.buf.signature_help({ border = "rounded" })
+    end, "Signature help")
   end,
 })
 

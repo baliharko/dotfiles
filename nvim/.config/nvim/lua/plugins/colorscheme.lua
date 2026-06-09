@@ -6,6 +6,11 @@ return {
     opts = {
       transparent = true,
       dimInactive = false,
+      commentStyle = { italic = false },
+      keywordStyle = { italic = false },
+      statementStyle = { bold = true, italic = false },
+      functionStyle = { italic = false },
+      typeStyle = { italic = false },
     },
     config = function(_, opts)
       require("kanagawa").setup(opts)
@@ -14,29 +19,18 @@ return {
       local colors = require("kanagawa.colors").setup()
       local float_colors = colors.theme.ui.float
 
-      for _, group in ipairs({
+      -- Global editor groups. Neo-tree's own groups are kept transparent in
+      -- ui.lua, which re-applies after neo-tree defines them.
+      require("config.transparent").clear_background({
         "Normal",
         "NormalNC",
         "SignColumn",
         "EndOfBuffer",
         "LineNr",
         "CursorLineNr",
-        "NeoTreeNormal",
-        "NeoTreeNormalNC",
-        "NeoTreeFloatNormal",
         "FloatBorder",
         "FloatTitle",
-        "NeoTreeFloatBorder",
-        "NeoTreeFloatTitle",
-        "NeoTreeTitleBar",
-      }) do
-        local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = group, link = false })
-        if ok and hl then
-          hl.bg = "none"
-          hl.ctermbg = nil
-          vim.api.nvim_set_hl(0, group, hl)
-        end
-      end
+      })
 
       if float_colors then
         vim.api.nvim_set_hl(0, "NormalFloat", {

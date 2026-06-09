@@ -72,7 +72,7 @@ return {
         callback = function()
           local argc = vim.fn.argc()
           if argc == 0 then
-            require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+            require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
             return
           end
 
@@ -115,6 +115,9 @@ return {
       },
     },
     config = function(_, opts)
+      -- Neo-tree's own float groups. Re-applied after neo-tree defines them
+      -- (below and via the highlights.setup patch). Global float groups are
+      -- handled in the colorscheme config.
       local groups = {
         "NeoTreeNormal",
         "NeoTreeNormalNC",
@@ -122,54 +125,10 @@ return {
         "NeoTreeFloatBorder",
         "NeoTreeFloatTitle",
         "NeoTreeTitleBar",
-        "FloatBorder",
-        "FloatTitle",
       }
 
-      local function hex(value)
-        if type(value) == "number" then
-          return string.format("#%06x", value)
-        end
-        return value
-      end
-
       local function clear_background()
-        for _, group in ipairs(groups) do
-          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = group, link = false })
-          if ok and hl then
-            local attrs = {
-              bg = "NONE",
-              ctermbg = "NONE",
-            }
-            if hl.fg then
-              attrs.fg = hex(hl.fg)
-            end
-            if hl.sp then
-              attrs.sp = hex(hl.sp)
-            end
-            for _, key in ipairs({
-              "bold",
-              "italic",
-              "underline",
-              "undercurl",
-              "underdouble",
-              "underdashed",
-              "underdotted",
-              "strikethrough",
-              "reverse",
-              "nocombine",
-              "standout",
-            }) do
-              if hl[key] ~= nil then
-                attrs[key] = hl[key]
-              end
-            end
-            if hl.ctermfg then
-              attrs.ctermfg = hl.ctermfg
-            end
-            vim.api.nvim_set_hl(0, group, attrs)
-          end
-        end
+        require("config.transparent").clear_background(groups)
       end
 
       local highlights = require("neo-tree.ui.highlights")
