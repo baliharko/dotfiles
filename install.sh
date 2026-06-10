@@ -104,6 +104,9 @@ backup_conflicts() {
 
 stow_packages() {
   log "Stowing packages: ${PACKAGES[*]}"
+  # Pre-create ~/.config so stow links package subdirs instead of folding
+  # ~/.config itself into a symlink pointing at the repo.
+  mkdir -p "$HOME/.config"
   local pkg
   for pkg in "${PACKAGES[@]}"; do
     backup_conflicts "$pkg"

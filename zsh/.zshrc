@@ -1,3 +1,7 @@
+# Homebrew is not on the default macOS PATH; nothing else guarantees this on
+# a fresh machine (no .zprofile is stowed).
+[ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export LESSCHARSET=utf-8
 export NVM_DIR="$HOME/.nvm"
 export FZF_COMPLETION_TRIGGER='**'

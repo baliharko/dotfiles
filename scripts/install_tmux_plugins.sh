@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-TMUX_PLUGIN_MANAGER_PATH="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}"
+# Must match where tpm looks: with the config at ~/.config/tmux/tmux.conf,
+# tpm uses the XDG plugin path, not ~/.tmux/plugins.
+TMUX_PLUGIN_MANAGER_PATH="${TMUX_PLUGIN_MANAGER_PATH:-${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins}"
 TPM_DIR="${TPM_DIR:-$TMUX_PLUGIN_MANAGER_PATH/tpm}"
 
 echo "tmux plugin directory: ${TMUX_PLUGIN_MANAGER_PATH}"
