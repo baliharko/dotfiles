@@ -28,12 +28,16 @@ update_clone() {
 }
 
 require_cmd git
+require_cmd curl
 
 echo "Using ZSH directory: $ZSH_DIR"
 
 if [ ! -d "$ZSH_DIR" ]; then
-  echo "Installing oh-my-zsh..."
-  git clone https://github.com/ohmyzsh/ohmyzsh.git "$ZSH_DIR"
+  echo "Installing oh-my-zsh via the official installer..."
+  # --keep-zshrc: never replace ~/.zshrc (it is a stow symlink into this repo).
+  RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    "" --unattended --keep-zshrc
 else
   echo "oh-my-zsh already present."
 fi
@@ -46,19 +50,8 @@ update_clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 update_clone https://github.com/zsh-users/zsh-autosuggestions.git \
   "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
 
-if command -v starship >/dev/null 2>&1; then
-  echo "starship already installed."
-else
-  if command -v brew >/dev/null 2>&1; then
-    echo "Installing starship via Homebrew..."
-    brew install starship
-  else
-    cat <<'EOF'
-starship not found and Homebrew is unavailable.
-Install manually from https://starship.rs/ or run:
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
-EOF
-  fi
+if ! command -v starship >/dev/null 2>&1; then
+  echo "Note: starship not found. Install it via 'brew bundle' from the repo Brewfile." >&2
 fi
 
 echo "zsh dependencies ready. Start a new shell or reload ~/.zshrc."
