@@ -110,7 +110,10 @@ stow_packages() {
   local pkg
   for pkg in "${PACKAGES[@]}"; do
     backup_conflicts "$pkg"
-    stow -d "$REPO_DIR" -t "$HOME" --restow --ignore='\.DS_Store' "$pkg"
+    # --no-folding: link files individually instead of symlinking whole
+    # directories, so runtime files (tmux plugins, karabiner backups)
+    # land outside the repo.
+    stow -d "$REPO_DIR" -t "$HOME" --restow --no-folding --ignore='\.DS_Store' "$pkg"
   done
 }
 
