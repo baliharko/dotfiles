@@ -11,6 +11,7 @@ brew "ripgrep"
 brew "starship"
 brew "stow"
 brew "tmux"
+brew "tree-sitter-cli" # parser builds for nvim-treesitter (main branch)
 brew "zoxide"
 
 # Work
