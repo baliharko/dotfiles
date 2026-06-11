@@ -8,9 +8,6 @@ font-family = "Jetbrains Mono Nerd Font"
 
 theme = kanagawabones
 
-background-opacity = 0.98
-background-blur = true
-
 macos-titlebar-style = hidden
 
 window-padding-balance = true
