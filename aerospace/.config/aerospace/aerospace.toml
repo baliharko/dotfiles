@@ -96,6 +96,13 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-ctrl-cmd-y = 'exec-and-forget /usr/local/bin/yoink'
     alt-shift-ctrl-cmd-u = 'exec-and-forget /usr/local/bin/yoink --yeet'
 
+    # Launch apps
+    alt-shift-ctrl-cmd-enter = 'exec-and-forget open -a Ghostty'
+    alt-shift-ctrl-cmd-a = 'exec-and-forget open -a Zen'
+    alt-shift-ctrl-cmd-s = 'exec-and-forget open -a Slack'
+    alt-shift-ctrl-cmd-i = 'exec-and-forget open -a "IntelliJ IDEA"'
+    alt-shift-ctrl-cmd-o = 'exec-and-forget open -a "Microsoft Outlook"'
+
 # Service mode: each binding runs, then returns to main mode
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
