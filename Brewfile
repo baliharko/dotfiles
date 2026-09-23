@@ -16,6 +16,9 @@ brew "zoxide"
 
 # Work
 brew "colima"
+brew "docker"         # CLI only; colima provides the runtime
+brew "granted"        # assume
+brew "kubectx"        # kubectx, kubens
 brew "kubernetes-cli" # kubectl
 
 # Apps

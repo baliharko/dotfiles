@@ -15,9 +15,10 @@ cd ~/dotfiles
 `install.sh` is idempotent — re-run it any time. What it does, in order:
 
 1. Installs Homebrew if missing.
-2. Installs everything in the `Brewfile` (CLI tools, colima/kubectl, Ghostty,
-   Karabiner-Elements, AeroSpace, JetBrains Mono Nerd Font). Apps that were
-   installed manually are adopted by brew instead of failing.
+2. Installs everything in the `Brewfile` (CLI tools, work tools like
+   colima/docker/kubectl, Ghostty, Karabiner-Elements, AeroSpace, JetBrains
+   Mono Nerd Font). Apps that were installed manually are adopted by brew
+   instead of failing.
 3. Stows all packages. Any pre-existing file in the way is moved to
    `~/.dotfiles-backup/<timestamp>/` — nothing is merged or overwritten in place.
 4. Sets up oh-my-zsh (official installer, unattended, never touches the stowed
@@ -27,7 +28,26 @@ cd ~/dotfiles
    (see below). Skip with `--no-yoink`, force with `--yoink`.
 
 Afterwards: grant Karabiner-Elements and AeroSpace their permissions in System
-Settings, and open a new shell.
+Settings, restore `~/.zshrc.work` on a work machine (see below), and open a
+new shell.
+
+## Work-specific shell config
+
+This repo is public, so anything tied to work (AWS profiles, cluster and
+namespace names, internal hosts) lives in `~/.zshrc.work` instead of the
+stowed `.zshrc`. The last line of `.zshrc` sources it if it exists:
+
+```
+[[ -r ~/.zshrc.work ]] && source ~/.zshrc.work
+```
+
+The file is not in this repo and `install.sh` does not create it. On a new
+work machine, copy it over from the old one (or a password manager / private
+backup). Without it the shell works normally; only the work helpers are
+missing — currently `actx <profile>`, which runs `assume` (Granted) for an AWS
+profile and switches `kubectx`/`kubens` to the matching cluster and namespace.
+
+Add new work-only aliases, functions and exports there, not in `.zshrc`.
 
 ## Manual use
 
