@@ -8,6 +8,12 @@ font-family = "Jetbrains Mono Nerd Font"
 
 theme = kanagawabones
 
+# Slightly see-through background with the native macOS glass effect (macOS
+# 26+). The blur only applies while the opacity is below 1. On macOS a change
+# to the opacity only takes effect after quitting and reopening Ghostty.
+background-opacity = 0.9
+background-blur = macos-glass-regular
+
 macos-titlebar-style = hidden
 
 window-padding-balance = true

@@ -10,7 +10,7 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(aerospace ghostty htop karabiner nvim tmux zsh)
+PACKAGES=(aerospace ghostty htop karabiner nvim opencode tmux zsh)
 BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 BACKUP_USED=0
 YOINK_MODE="ask" # ask | yes | no
