@@ -28,6 +28,10 @@ opt.numberwidth = 2
 opt.termguicolors = true
 opt.updatetime = 50
 opt.laststatus = 3
+-- Use the macOS clipboard even when Neovim runs inside tmux.
+if vim.fn.has("mac") == 1 then
+  vim.g.clipboard = "pbcopy"
+end
 opt.clipboard = "unnamedplus"
 opt.guicursor = ""
 
