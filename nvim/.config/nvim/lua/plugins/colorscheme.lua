@@ -11,6 +11,13 @@ return {
       statementStyle = { bold = true, italic = false },
       functionStyle = { italic = false },
       typeStyle = { italic = false },
+      overrides = function()
+        return {
+          -- Kanagawa gives Telescope borders a solid background even when
+          -- transparent is enabled. All picker borders inherit this group.
+          TelescopeBorder = { bg = "NONE", ctermbg = "NONE" },
+        }
+      end,
     },
     config = function(_, opts)
       require("kanagawa").setup(opts)
