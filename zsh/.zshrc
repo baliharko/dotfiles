@@ -136,6 +136,10 @@ if command -v colima >/dev/null 2>&1; then
     case "$1" in
       start|stop|restart|delete) _refresh_colima_addr ;;
     esac
+    # Point the default docker socket at colima for tools that ignore DOCKER_HOST.
+    if (( rc == 0 )) && [[ "$1" == (start|restart) ]]; then
+      sudo ln -sf "$HOME/.colima/default/docker.sock" /var/run/docker.sock
+    fi
     return $rc
   }
 fi
